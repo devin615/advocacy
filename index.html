@@ -43,10 +43,10 @@
 
         .pillar-main { flex: 2; padding: 2.5rem; }
         .pillar-main p, .pillar-main li {
-        font-size: 1.25rem; /* Equivalent to 20px */
-        line-height: 1.7;   /* Adds more breathing room between lines */
-        margin-bottom: 1.2rem;
-    }
+            font-size: 1.25rem; /* Equivalent to 20px */
+            line-height: 1.7;   /* Adds more breathing room between lines */
+            margin-bottom: 1.2rem;
+        }
         .pillar-sidebar { flex: 1; background: rgba(15, 23, 42, 0.4); padding: 2rem; border-left: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: center; gap: 1.2rem; }
 
         h2 { color: var(--primary); font-size: 1.6rem; border-bottom: 1px solid rgba(45, 212, 191, 0.2); padding-bottom: 10px; }
@@ -106,6 +106,75 @@
         .view-tag { margin-left: auto; font-size: 0.7rem; font-weight: 900; color: var(--primary); opacity: 0; transform: translateX(10px); transition: 0.3s; }
         .file-card:hover .view-tag { opacity: 1; transform: translateX(0); }
 
+        /* Password Overlay Styling */
+        #test-results {
+            position: relative; 
+            min-height: 400px;
+        }
+
+        .lock-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            border-radius: 16px;
+            border: 2px dashed var(--accent);
+            text-align: center;
+            padding: 20px;
+        }
+
+        .lock-box {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--primary);
+            max-width: 450px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .lock-box input {
+            background: #0f172a;
+            border: 1px solid var(--text-muted);
+            color: white;
+            padding: 12px;
+            width: 80%;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .lock-box button {
+            background: var(--primary);
+            color: #0f172a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            font-weight: 800;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .hint-text {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
         footer { text-align: center; padding: 4rem 1rem; color: var(--text-muted); font-size: 0.8rem; }
     </style>
 </head>
@@ -120,7 +189,7 @@
     <div class="pillar-card" style="border-top: 6px solid var(--warning);">
         <div class="pillar-main">
             <h2>1. The "Meal Trap": Why Food is Currently Hurting Him</h2>
-            <p>David is currently in a <b>Catabolic State</b>. Right now, Dad’s body is stuck in a cruel cycle called a catabolic statebasically, it's eating itself to stay alive.</p>
+            <p>David is currently in a <b>Catabolic State</b>. Right now, Dad’s body is stuck in a cruel cycle called a catabolic state basically, it's eating itself to stay alive.</p>
             
             <p><b>Here’s the simple explanation:</b><br>
             When we eat, food turns into glucose (sugar) in the blood that's supposed to be the body's main fuel. But in uncontrolled diabetes:</p>
@@ -131,7 +200,7 @@
                 <li>The cells literally starve, even though there's plenty of sugar floating around ("starving in a land of plenty").</li>
             </ul>
 
-            <p>To survive, the body panics and starts breaking down its own muscle and fat for emergency fuel. <b>This is why Dad has lost 120–140 pounds</b>his body is cannibalizing itself, causing extreme weakness, fatigue, and frailty.</p>
+            <p>To survive, the body panics and starts breaking down its own muscle and fat for emergency fuel. <b>This is why Dad has lost 120–140 pounds</b> his body is cannibalizing itself, causing extreme weakness, fatigue, and frailty.</p>
 
             <p>Every time he eats (especially carbs), blood sugar spikes even higher (like the 211 mg/dL readings in January 2025 on his graph). But almost none of that sugar gets used, so the meal actually feeds the problem:</p>
 
@@ -145,8 +214,6 @@
             <div class="alert-box">
                 <strong>The "Sandpaper Effect":</strong> Every time David eats, his sugar spikes. This sugar acts like <b>liquid sandpaper</b> in his blood, scouring and damaging the inside of his brain arteries.
             </div>
-
-            
 
             <h3 style="color: var(--primary); font-size: 0.9rem;">Bedside Evidence: Blood Glucose Trends</h3>
             
@@ -209,6 +276,10 @@
                     <details class="details-toggle"><summary>Plain English</summary><div class="details-content">His kidneys work great (Creatinine 1.0), but his blood is flooded with "ash" (BUN 50). It is the clinical proof that he is cannibalizing his own body for energy.</div></details>
                 </div>
             </div>
+            <div class="pillar-sidebar">
+                <span style="color: var(--text-muted); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Medical Education</span>
+                <a href="https://www.youtube.com/watch?v=JAjZv41iUJU" target="_blank" class="btn-action">▶ Watch: How diabetes kills him</a>
+            </div>
         </div>
     </div>
 
@@ -220,11 +291,6 @@
             <div class="alert-box">
                 <strong>The Crisis:</strong> The <b>Right Vertebral Artery</b> shows "Marked Narrowing" (Stenosis). High sugar is actively clogging this remaining lifeline.
             </div>
-
-            
-
-
-
 
             <h3 style="color: var(--warning); font-size: 0.9rem; margin-top: 2rem;">Permanent Tissue Damage: Sustained Infarcts</h3>
             <p style="font-size: 0.85rem; color: var(--text-muted);">The August 17, 2024 MRI confirms permanent brain tissue death (infarcts)</p>
@@ -262,11 +328,23 @@
         </div>
         <div class="pillar-sidebar">
             <span style="color: var(--text-muted); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Medical Education</span>
-            <a href="https://www.youtube.com/watch?v=wbShOXhO6p8" target="_blank" class="btn-action">▶ Watch: How Arteries Clog</a>
+            <a href="https://www.youtube.com/watch?v=7FR1TsKLoDI" target="_blank" class="btn-action">▶ Watch: How Arteries Clog</a>
         </div>
     </div>
 
     <section id="test-results" class="file-library">
+        <div id="password-gate" class="lock-overlay">
+            <div class="lock-box">
+                <h2 style="border:none; color: var(--primary);">🔒 Restricted Access</h2>
+                <p class="hint-text">
+                    <strong>Hint:</strong> A beautiful, flying insect known for its large, colorful, scaly wings that display intricate patterns, used to be a caterpillar, and reminds you of a loved one.
+                </p>
+                <input type="password" id="password-input" placeholder="Enter Password">
+                <br>
+                <button onclick="unlockLibrary()">Unlock Library</button>
+                <p id="error-msg" style="color: var(--high); font-size: 0.8rem; margin-top: 10px; display: none;">Incorrect Password. Please try again.</p>
+            </div>
+        </div>
         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 0.5rem;">
             <h2 style="margin: 0; border-bottom: none;">3. Clinical Evidence Library</h2>
             <span style="background: rgba(45, 212, 191, 0.1); color: var(--primary); padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; border: 1px solid var(--primary);">Verified Source</span>
@@ -274,129 +352,153 @@
         <p style="color: var(--text-muted); margin-bottom: 2rem;">Verified UPMC Hamot Hospital Records & Laboratory Results.</p>
         
         <div class="file-grid">
-    <a href="Docs/A1C Trend.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">A1C Trend.pdf</span>
-            <span class="file-meta">Endocrine Analysis</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/A1C Trend.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">A1C Trend.pdf</span>
+                    <span class="file-meta">Endocrine Analysis</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/COMPREHENSIVE METABOLIC PANEL.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">Metabolic Panel.pdf</span>
-            <span class="file-meta">Metabolic Analysis</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/COMPREHENSIVE METABOLIC PANEL.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">Metabolic Panel.pdf</span>
+                    <span class="file-meta">Metabolic Analysis</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/CT Angio Head.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">CT Angio Head.pdf</span>
-            <span class="file-meta">Cerebral Imaging</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/CT Angio Head.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">CT Angio Head.pdf</span>
+                    <span class="file-meta">Cerebral Imaging</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/CT ANGIOGRAM NECK.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">CT Angio Neck.pdf</span>
-            <span class="file-meta">Vascular Imaging</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/CT ANGIOGRAM NECK.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">CT Angio Neck.pdf</span>
+                    <span class="file-meta">Vascular Imaging</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/CurrentHealthIssues.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">Current Health Issues.pdf</span>
-            <span class="file-meta">Clinical Summary</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/CurrentHealthIssues.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">Current Health Issues.pdf</span>
+                    <span class="file-meta">Clinical Summary</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/HISTORICAL LIPID PANEL WITH REFLEX TO DIRECT LDL.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">Lipid Panel (Direct LDL).pdf</span>
-            <span class="file-meta">Cardiovascular Labs</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/HISTORICAL LIPID PANEL WITH REFLEX TO DIRECT LDL.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">Lipid Panel (Direct LDL).pdf</span>
+                    <span class="file-meta">Cardiovascular Labs</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/HISTORICAL LIPID PANEL.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">Lipid Panel.pdf</span>
-            <span class="file-meta">Historical Trends</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/HISTORICAL LIPID PANEL.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">Lipid Panel.pdf</span>
+                    <span class="file-meta">Historical Trends</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/Historical MicroalbuminCreatinine Ratio.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">Albumin/Cr Ratio.pdf</span>
-            <span class="file-meta">Renal Function</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/Historical MicroalbuminCreatinine Ratio.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">Albumin/Cr Ratio.pdf</span>
+                    <span class="file-meta">Renal Function</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/Medication.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">Medication.pdf</span>
-            <span class="file-meta">Compliance Log</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/Medication.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">Medication.pdf</span>
+                    <span class="file-meta">Compliance Log</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/MR ANGIOGRAM HEAD WO IV CONTRAST.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">MRI Brain Report.pdf</span>
-            <span class="file-meta">Infarct Evidence</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/MR ANGIOGRAM HEAD WO IV CONTRAST.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">MRI Brain Report.pdf</span>
+                    <span class="file-meta">Infarct Evidence</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/POCT GLUCOSE METER UNSOLICITED RESULTS.pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">Glucose Unsolicited.pdf</span>
-            <span class="file-meta">Bedside Readings</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/POCT GLUCOSE METER UNSOLICITED RESULTS.pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">Glucose Unsolicited.pdf</span>
+                    <span class="file-meta">Bedside Readings</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/Result Trends - POCT GLUCOSE METER UNSOLICITED RESULTS - ....pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">Glucose Trends.pdf</span>
-            <span class="file-meta">Glucose Mapping</span>
-        </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
+            <a href="Docs/Result Trends - POCT GLUCOSE METER UNSOLICITED RESULTS - ....pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">Glucose Trends.pdf</span>
+                    <span class="file-meta">Glucose Mapping</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
 
-    <a href="Docs/Scan - HISTORICAL CARDIAC MONITOR RESULT - Oct 22, 2024.....pdf" target="_blank" class="file-card">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-            <span class="file-name">Cardiac Monitor.pdf</span>
-            <span class="file-meta">SVT Logs (Oct 2024)</span>
+            <a href="Docs/Scan - HISTORICAL CARDIAC MONITOR RESULT - Oct 22, 2024.....pdf" target="_blank" class="file-card">
+                <div class="file-icon">📄</div>
+                <div class="file-info">
+                    <span class="file-name">Cardiac Monitor.pdf</span>
+                    <span class="file-meta">SVT Logs (Oct 2024)</span>
+                </div>
+                <div class="view-tag">VIEW ↗</div>
+            </a>
         </div>
-        <div class="view-tag">VIEW ↗</div>
-    </a>
-</div>
     </section>
 </div>
 
 <footer>
     &copy; 2025 David Olewski Medical Advocacy - For Clinical Review Only
 </footer>
+
+<script>
+function unlockLibrary() {
+    const pass = document.getElementById('password-input').value;
+    const gate = document.getElementById('password-gate');
+    const error = document.getElementById('error-msg');
+
+    // Check password (Butterfly)
+    if (pass.toLowerCase() === "butterfly") {
+        gate.classList.add('hidden');
+    } else {
+        error.style.display = 'block';
+        document.getElementById('password-input').value = ""; // Clear input
+    }
+}
+
+// Allow pressing "Enter" key to submit
+document.getElementById('password-input').addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    unlockLibrary();
+  }
+});
+</script>
 
 </body>
 </html>
