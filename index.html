@@ -4,98 +4,238 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>David Olewski - Medical Advocacy & Evidence</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
             --bg: #0f172a;
             --card-bg: #1e293b;
-            --primary: #2dd4bf;      /* Teal (Safe/Normal) */
-            --elevated: #fbbf24;     /* Amber (Elevated) */
-            --high: #ef4444;         /* Red (Active Damage) */
-            --critical: #ff003c;     /* Neon Red (Guaranteed Damage) */
-            --accent: #818cf8;       /* Indigo */
+            --primary: #2dd4bf;
+            --elevated: #fbbf24;
+            --high: #ef4444;
+            --critical: #ff003c;
+            --accent: #818cf8;
             --text-main: #f1f5f9;
             --text-muted: #94a3b8;
             --warning: #fb7185;
             --dr-bg: #334155;
             --devin-bg: #0d9488;
+            --glass: rgba(30, 41, 59, 0.6);
         }
 
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', system-ui, sans-serif; background-color: var(--bg); color: var(--text-main); line-height: 1.6; margin: 0; font-size: 14px; }
-        
-        nav { 
-            background: rgba(30, 41, 59, 0.95); padding: 1rem; position: sticky; top: 0; z-index: 1000; border-bottom: 2px solid var(--primary); display: flex; justify-content: center; gap: 20px; backdrop-filter: blur(10px);
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background: var(--bg); 
+            color: var(--text-main); 
+            line-height: 1.6; 
+            margin: 0; 
+            font-size: 16px;
+            overflow-x: hidden;
         }
-        .nav-btn { background: var(--primary); color: #0f172a; padding: 10px 25px; border-radius: 30px; text-decoration: none; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; font-size: 0.75rem; }
+
+        nav { 
+            background: var(--glass); 
+            padding: 1.2rem; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; 
+            border-bottom: 2px solid var(--primary); 
+            display: flex; 
+            justify-content: center; 
+            gap: 24px; 
+            backdrop-filter: blur(16px);
+            flex-wrap: wrap;
+        }
+        .nav-btn { 
+            background: var(--primary); 
+            color: #0f172a; 
+            padding: 12px 32px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            letter-spacing: 1.5px; 
+            font-size: 0.9rem; 
+        }
         .nav-btn.sim-btn { background: var(--accent); color: white; }
-        .nav-btn:hover { transform: scale(1.05); box-shadow: 0 0 15px var(--primary); }
 
-        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
-        .pillar-card { background: var(--card-bg); border-radius: 16px; overflow: hidden; display: flex; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 2.5rem; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
-        @media (max-width: 900px) { .pillar-card { flex-direction: column; } }
-
-        .pillar-main { flex: 2; padding: 2.5rem; }
-        .pillar-main p, .pillar-main li { font-size: 1.25rem; line-height: 1.7; margin-bottom: 1.2rem; }
-        .pillar-sidebar { flex: 1; background: rgba(15, 23, 42, 0.4); padding: 2rem; border-left: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; justify-content: center; gap: 1.2rem; }
-
-        h2 { color: var(--primary); font-size: 1.6rem; border-bottom: 1px solid rgba(45, 212, 191, 0.2); padding-bottom: 10px; }
-        .alert-box { background: rgba(251, 113, 133, 0.1); border-left: 5px solid var(--warning); padding: 1.5rem; border-radius: 4px; margin-bottom: 20px; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
         
-        .chart-container { background: #0f172a; border-radius: 8px; padding: 15px; margin: 10px 0 20px 0; border: 1px solid rgba(45, 212, 191, 0.2); overflow-x: auto; }
-        .chart-flex { display: flex; align-items: flex-end; gap: 4px; height: 180px; padding-bottom: 5px; border-bottom: 1px solid #334155; min-width: 900px; }
-        .bar { flex: 1; border-radius: 2px 2px 0 0; position: relative; min-width: 14px; transition: 0.3s; }
-        .bar.normal { background: var(--primary); }
-        .bar.elevated { background: var(--elevated); }
-        .bar.high { background: var(--high); }
-        .bar.critical { background: var(--critical); box-shadow: 0 0 15px rgba(255, 0, 60, 0.5); animation: pulse-damage 2s infinite; }
-        @keyframes pulse-damage { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-        .bar:hover::after { content: attr(data-value); position: absolute; top: -22px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: bold; color: #fff; }
 
-        .legend { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 10px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
-        .legend-item { display: flex; align-items: center; gap: 6px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .pillar-card { 
+            background: var(--card-bg); 
+            border-radius: 20px; 
+            overflow: hidden; 
+            margin-bottom: 3rem; 
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(60px);
+            animation: fadeInUpCard 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .pillar-card:nth-of-type(1) { border-top: 8px solid var(--warning); animation-delay: 0.3s; }
+        .pillar-card:nth-of-type(2) { border-top: 8px solid var(--critical); animation-delay: 0.6s; }
+        @media (min-width: 900px) { .pillar-card { flex-direction: row; } }
 
-        .data-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 2rem; }
-        .data-item { background: rgba(15, 23, 42, 0.6); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05); }
-        .data-label { color: var(--primary); font-weight: 800; font-size: 0.75rem; text-transform: uppercase; display: block; }
-        .data-value { font-weight: 800; font-size: 1.2rem; color: #fff; }
-        .details-toggle { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 12px; margin-top: 10px; cursor: pointer; }
-        .details-content { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 0.9rem; }
-        .btn-action { background: var(--primary); color: #0f172a; text-align: center; padding: 12px; text-decoration: none; border-radius: 8px; font-weight: 800; text-transform: uppercase; }
+        .pillar-main { padding: 2rem; flex: 2; }
+        @media (min-width: 900px) { .pillar-main { padding: 3rem; } }
 
-        /* MESSAGING UI */
-        .sim-section { background: #0f172a; border-radius: 20px; border: 2px solid var(--accent); padding: 2.5rem; margin-top: 4rem; box-shadow: 0 15px 50px rgba(0,0,0,0.5); }
-        .chat-window { display: flex; flex-direction: column; gap: 1.2rem; max-width: 900px; margin: 0 auto; }
-        .msg { max-width: 85%; padding: 1.2rem 1.6rem; border-radius: 20px; font-size: 1.15rem; position: relative; animation: slideIn 0.3s ease-out; display: none; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        .dr-msg { align-self: flex-start; background: var(--dr-bg); color: white; border-bottom-left-radius: 4px; }
-        .devin-msg { align-self: flex-end; background: var(--devin-bg); color: white; border-bottom-right-radius: 4px; text-align: right; }
-        .msg-label { font-size: 0.75rem; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; opacity: 0.8; display: block; letter-spacing: 1px; }
-        .reality-check { background: rgba(239, 68, 68, 0.15); border-left: 4px solid var(--high); padding: 1rem; border-radius: 8px; margin-top: 12px; font-size: 1rem; text-align: left; color: #fecaca; }
-        .reveal-btn { background: var(--accent); color: white; border: none; padding: 18px 36px; border-radius: 50px; font-weight: 800; cursor: pointer; display: block; margin: 2.5rem auto; text-transform: uppercase; letter-spacing: 1.5px; transition: 0.3s; box-shadow: 0 6px 20px rgba(129, 140, 248, 0.4); }
-        .reveal-btn:hover { background: #6366f1; transform: translateY(-3px); }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        h2 { color: var(--primary); font-size: 1.8rem; margin-bottom: 1.5rem; }
 
-        /* LIBRARY */
-        .file-library { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); }
-        .file-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
-        .file-card { background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 1.2rem; display: flex; align-items: center; gap: 1rem; text-decoration: none; transition: 0.3s; position: relative; overflow: hidden; }
-        .file-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-        .file-icon { background: rgba(239, 68, 68, 0.1); color: #ef4444; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 10px; font-size: 1.2rem; flex-shrink: 0; }
-        .file-info { display: flex; flex-direction: column; overflow: hidden; }
-        .file-name { color: #fff; font-weight: 700; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .view-tag { margin-left: auto; font-size: 0.7rem; font-weight: 900; color: var(--primary); opacity: 0; transform: translateX(10px); transition: 0.3s; }
-        .file-card:hover .view-tag { opacity: 1; transform: translateX(0); }
+        .alert-box { 
+            background: rgba(251, 113, 133, 0.12); 
+            border-left: 6px solid var(--warning); 
+            padding: 1.8rem; 
+            border-radius: 12px; 
+            margin: 2rem 0; 
+            font-size: 1.2rem;
+        }
 
-        /* PASSWORD */
-        #test-results { position: relative; min-height: 400px; }
-        .lock-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(12px); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100; border-radius: 16px; border: 2px dashed var(--accent); text-align: center; padding: 20px; }
-        .lock-box { background: var(--card-bg); padding: 2.5rem; border-radius: 12px; border: 1px solid var(--primary); max-width: 450px; box-shadow: 0 0 30px rgba(0,0,0,0.5); }
-        .lock-box input { background: #0f172a; border: 1px solid var(--text-muted); color: white; padding: 12px; width: 80%; border-radius: 5px; margin-bottom: 15px; text-align: center; font-size: 1rem; }
-        .lock-box button { background: var(--primary); color: #0f172a; border: none; padding: 12px 25px; border-radius: 5px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
-        .hint-text { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 25px; font-style: italic; line-height: 1.5; }
+        .chart-wrapper {
+            position: relative;
+            height: 360px;
+            margin: 2.5rem 0;
+            background: #0a1120;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(45, 212, 191, 0.3);
+        }
+
+        .data-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+            gap: 20px; 
+            margin-top: 2.5rem; 
+        }
+        .data-item { 
+            background: rgba(15, 23, 42, 0.7); 
+            padding: 20px; 
+            border-radius: 16px; 
+            border: 1px solid rgba(255,255,255,0.08); 
+        }
+        .data-label { color: var(--primary); font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
+        .data-value { font-weight: 900; font-size: 1.6rem; margin: 8px 0; display: block; }
+
+        .sim-section { 
+            background: linear-gradient(135deg, #0f172a 0%, #1a2338 100%);
+            border-radius: 28px; 
+            border: 2px solid var(--accent); 
+            padding: 3rem 2rem; 
+            margin: 5rem 0; 
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+        }
+        .chat-window { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 1.8rem; }
+        .msg { max-width: 85%; padding: 1.6rem 2rem; border-radius: 24px; font-size: 1.15rem; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .dr-msg { align-self: flex-start; background: var(--dr-bg); border-bottom-left-radius: 6px; }
+        .devin-msg { align-self: flex-end; background: var(--devin-bg); border-bottom-right-radius: 6px; text-align: right; }
+        .msg-label { font-size: 0.8rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8; letter-spacing: 1.5px; }
+        .reality-check { background: rgba(239, 68, 68, 0.2); border-left: 5px solid var(--high); padding: 1.2rem; border-radius: 12px; margin-top: 16px; color: #ff9999; }
+        .win-state { background: linear-gradient(90deg, var(--primary), #22d3ee); color: #0f172a; text-align: center; font-size: 1.6rem; font-weight: 900; padding: 2rem; border-radius: 24px; animation: celebrate 2s ease-out forwards; }
+        .reveal-btn { 
+            background: var(--accent); 
+            color: white; 
+            border: none; 
+            padding: 20px 48px; 
+            border-radius: 60px; 
+            font-weight: 800; 
+            font-size: 1.1rem;
+            cursor: pointer; 
+            display: block; 
+            margin: 4rem auto; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            box-shadow: 0 10px 40px rgba(129, 140, 248, 0.5);
+            transition: all 0.3s;
+        }
+        .reveal-btn:hover { transform: translateY(-4px); }
+
+        .file-library { 
+            position: relative;
+            margin-top: 5rem; 
+            padding-top: 3rem; 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+        }
+        .file-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.8rem; margin-top: 2rem; }
+        .file-card { 
+            background: var(--card-bg); 
+            border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 18px; 
+            padding: 1.6rem; 
+            display: flex; 
+            align-items: center; 
+            gap: 1.4rem; 
+            text-decoration: none; 
+            transition: all 0.4s ease;
+        }
+        .file-card:hover { transform: translateY(-8px); border-color: var(--primary); box-shadow: 0 15px 40px rgba(45,212,191,0.3); }
+        .file-icon { background: rgba(239, 68, 68, 0.15); color: var(--high); width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; border-radius: 16px; font-size: 1.6rem; }
+        .view-tag { margin-left: auto; color: var(--primary); font-weight: 900; }
+
+        .lock-overlay { 
+            position: absolute; 
+            inset: 0; 
+            background: rgba(15, 23, 42, 0.95); 
+            backdrop-filter: blur(20px); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 20;
+            border-radius: 20px; 
+        }
+        .lock-box { 
+            background: var(--card-bg); 
+            padding: 3rem 2rem; 
+            border-radius: 24px; 
+            border: 2px solid var(--primary); 
+            max-width: 90%; 
+            width: 420px;
+            text-align: center; 
+            box-shadow: 0 30px 80px rgba(0,0,0,0.7); 
+        }
+        .lock-box h2 { margin-bottom: 1rem; }
+        .lock-box p { margin: 1.5rem 0; font-size: 1rem; color: var(--text-muted); }
+        .lock-box input { 
+            width: 100%; 
+            padding: 16px; 
+            border-radius: 12px; 
+            border: 2px solid var(--text-muted); 
+            background: #0f172a; 
+            color: white; 
+            font-size: 1.1rem; 
+            margin-bottom: 1.5rem;
+            transition: border 0.3s;
+        }
+        .lock-box input:focus { 
+            outline: none; 
+            border-color: var(--primary); 
+            box-shadow: 0 0 20px rgba(45,212,191,0.4);
+        }
+        .unlock-btn {
+            background: var(--primary);
+            color: #0f172a;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .unlock-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(45,212,191,0.5);
+        }
+
+        @keyframes fadeInUpCard { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes messageReveal { 0% { opacity: 0; transform: translateY(60px) scale(0.9); } 70% { transform: translateY(-10px) scale(1.02); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes celebrate { 0% { transform: scale(0.8); opacity: 0; } 50% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+        footer { text-align: center; padding: 5rem 1rem; color: var(--text-muted); font-size: 0.9rem; }
         .hidden { display: none !important; }
-
-        footer { text-align: center; padding: 4rem 1rem; color: var(--text-muted); font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -106,13 +246,21 @@
 </nav>
 
 <div class="container">
+    <div style="background: rgba(239, 68, 68, 0.2); border-left: 8px solid #ef4444; padding: 2rem; margin: 2rem 1rem; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(239,68,68,0.3);">
+    <h2 style="color: #ef4444; margin:0; font-size: 1.8rem;">URGENT UPDATE – December 2025</h2>
+    <p style="font-size: 1.3rem; margin: 1rem 0;">
+        The imaging and labs shown below are from <strong>2024/2025</strong>. It is now nearly <strong>2026</strong> — almost two full years later.<br><br>
+        David reports his symptoms are <strong>significantly worse</strong>. Given the 100% left vertebral occlusion, marked right vertebral stenosis, and ongoing uncontrolled cellular diabetes, his stroke risk has escalated from critical to <strong>ultra-critical</strong>.<br><br>
+        Without urgent intervention, catastrophic stroke is no longer a risk — it is imminent.
+    </p>
+</div>
 
-    <div class="pillar-card" style="border-top: 6px solid var(--warning);">
+    <div class="pillar-card">
         <div class="pillar-main">
             <h2>1. The "Meal Trap": Why Food is Currently Hurting Him</h2>
-            <p>David is currently in a <b>Catabolic State</b>. Right now, Dad’s body is stuck in a cruel cycle called a catabolic state  basically, it's eating itself to stay alive.</p>
+            <p>David is currently in a <b>Catabolic State</b>. Right now, Dad’s body is stuck in a cruel cycle called a catabolic state — basically, it's eating itself to stay alive.</p>
             
-            <ul style="margin-bottom: 20px;">
+            <ul>
                 <li>The hormone insulin (the "key") isn't working properly.</li>
                 <li>Glucose stays trapped in the blood and can't get inside most cells.</li>
                 <li>The cells literally starve, even though there's plenty of sugar floating around.</li>
@@ -122,38 +270,8 @@
                 <strong>The "Sandpaper Effect":</strong> High sugar spikes act like <b>liquid sandpaper</b> in his blood, scouring and damaging the inside of his brain arteries.
             </div>
 
-            <div class="chart-container">
-                <div class="chart-flex">
-                    <div class="bar high" style="height: 78%" data-value="196"></div>
-                    <div class="bar critical" style="height: 80%" data-value="201"></div>
-                    <div class="bar high" style="height: 68%" data-value="172"></div>
-                    <div class="bar elevated" style="height: 56%" data-value="141"></div>
-                    <div class="bar high" style="height: 69%" data-value="174"></div>
-                    <div class="bar high" style="height: 73%" data-value="184"></div>
-                    <div class="bar high" style="height: 65%" data-value="164"></div>
-                    <div class="bar high" style="height: 59%" data-value="149"></div>
-                    <div class="bar elevated" style="height: 55%" data-value="138"></div>
-                    <div class="bar high" style="height: 79%" data-value="199"></div>
-                    <div class="bar high" style="height: 61%" data-value="154"></div>
-                    <div class="bar high" style="height: 58%" data-value="145"></div>
-                    <div class="bar high" style="height: 75%" data-value="188"></div>
-                    <div class="bar high" style="height: 62%" data-value="156"></div>
-                    <div class="bar critical" style="height: 99%" data-value="249"></div>
-                    <div class="bar elevated" style="height: 56%" data-value="140"></div>
-                    <div class="bar high" style="height: 63%" data-value="158"></div>
-                    <div class="bar high" style="height: 74%" data-value="185"></div>
-                    <div class="bar high" style="height: 70%" data-value="176"></div>
-                    <div class="bar high" style="height: 62%" data-value="155"></div>
-                    <div class="bar high" style="height: 59%" data-value="149"></div>
-                    <div class="bar high" style="height: 60%" data-value="151"></div>
-                    <div class="bar high" style="height: 61%" data-value="154"></div>
-                    <div class="bar elevated" style="height: 46%" data-value="117"></div>
-                    <div class="bar elevated" style="height: 52%" data-value="130"></div>
-                    <div class="bar elevated" style="height: 46%" data-value="117"></div>
-                    <div class="bar critical" style="height: 84%" data-value="211"></div>
-                    <div class="bar elevated" style="height: 56%" data-value="141"></div>
-                    <div class="bar elevated" style="height: 46%" data-value="115"></div>
-                </div>
+            <div class="chart-wrapper">
+                <canvas id="glucoseChart"></canvas>
             </div>
 
             <div class="data-grid">
@@ -162,7 +280,7 @@
                     <details class="details-toggle"><summary>Plain English</summary><div class="details-content">This is 2.5 times higher than normal. It is proof that sugar physically scrapes and damages his brain arteries.</div></details>
                 </div>
                 <div class="data-item">
-                    <span class="data-label">A1C Trend</span><span class="data-value">7.3% &rarr; 5.1%</span>
+                    <span class="data-label">A1C Trend</span><span class="data-value">7.3% → 5.1%</span>
                     <details class="details-toggle"><summary>Plain English</summary><div class="details-content">A 5.1% A1C is a warning. It shows he is losing weight so fast he has no fuel left. The average looks low, but daily spikes are causing strokes.</div></details>
                 </div>
                 <div class="data-item">
@@ -177,114 +295,51 @@
         </div>
     </div>
 
-    <div class="pillar-card" style="border-top: 6px solid var(--critical);">
+    <div class="pillar-card">
         <div class="pillar-main">
             <h2>2. The Blockage: Surviving on Backups</h2>
             <p>Imaging confirms the <b>Left Vertebral Artery</b> is 100% blocked. David is surviving solely on his "backup" vessels.</p>
 
             <div class="data-grid" style="margin-bottom: 2rem;">
-                <div class="data-item" style="border: 1px solid var(--high);">
+                <div class="data-item" style="border: 2px solid var(--high);">
                     <span class="data-label">Left Thalamus Damage</span><span class="data-value">0.9 cm Infarct</span>
                     <details class="details-toggle"><summary>Clinical Meaning</summary><div class="details-content">Permanent tissue death in the thalamus, which serves as the brain's critical relay station for motor and sensory signals.</div></details>
                 </div>
-                <div class="data-item" style="border: 1px solid var(--high);">
+                <div class="data-item" style="border: 2px solid var(--high);">
                     <span class="data-label">Internal Capsule Damage</span><span class="data-value">0.6 cm Infarct</span>
                     <details class="details-toggle"><summary>Clinical Meaning</summary><div class="details-content">Located in the posterior limb on the left. Damage here disrupts the main pathway for messages between the brain and limbs.</div></details>
                 </div>
             </div>
 
             <div class="data-grid">
-                <div class="data-item" style="border: 1px solid var(--critical);"><span class="data-label">Left Vertebral</span><span class="data-value" style="color: var(--critical);">100% Blocked</span></div>
-                <div class="data-item" style="border: 1px solid var(--high);"><span class="data-label">Right Vertebral</span><span class="data-value" style="color: var(--high);">Marked Stenosis</span></div>
-                <div class="data-item" style="border: 1px solid var(--critical);"><span class="data-label">Stroke Risk</span><span class="data-value" style="color: var(--critical);">CRITICAL</span></div>
+                <div class="data-item" style="border: 2px solid var(--critical);"><span class="data-label">Left Vertebral</span><span class="data-value" style="color: var(--critical);">100% Blocked</span></div>
+                <div class="data-item" style="border: 2px solid var(--high);"><span class="data-label">Right Vertebral</span><span class="data-value" style="color: var(--high);">Marked Stenosis</span></div>
+                <div class="data-item" style="border: 2px solid var(--critical);"><span class="data-label">Stroke Risk</span><span class="data-value" style="color: var(--critical);">CRITICAL</span></div>
             </div>
 
-            <div style="margin-top: 2rem; border-radius: 12px; border: 1px solid rgba(45, 212, 191, 0.2); overflow: hidden;">
+            <div style="margin-top: 2.5rem; border-radius: 16px; border: 1px solid rgba(45, 212, 191, 0.3); overflow: hidden;">
                 <img src="COS.png" alt="Brain Artery Map" style="width:100%; display: block;">
             </div>
         </div>
     </div>
 
     <section id="simulator" class="sim-section">
-        <h2 style="color: var(--accent); border: none; text-align: center; margin-bottom: 2rem;">Simulated Appointment: The Deep Dive</h2>
-        <div class="chat-window" id="chatWindow">
-            <div class="msg dr-msg">
-                <span class="msg-label">Dr. Patton</span>
-                Devin, I hear your concerns. But let's be realistic: David is 64. At this age, we expect to see some 'wear and tear' on the pipes. His A1C is 5.1% that is a clinical victory. Why are we looking for a fire when the smoke has cleared?
-            </div>
-            <div class="msg devin-msg">
-                <span class="msg-label">Devin</span>
-                Because the smoke hasn't cleared, Doctor; the fuel has changed. His BUN is 50 and his ratio is 40. He isn't 'fixed'; he is 'starving.' You’re looking at the A1C like it’s a finished race, but I'm looking at his bedside glucose spikes to 211 as proof that his cells are still locked out. If his body is eating its own protein to stay alive, it’s also eating the very vessels he needs to survive that 100% occlusion in his neck.
-            </div>
-            <div class="msg dr-msg">
-                <span class="msg-label">Dr. Patton</span>
-                The BUN/Crea ratio is often high in patients who are just dehydrated or on a high-protein diet. We see this all the time.
-                <div class="reality-check"><strong>The Reality:</strong> Dehydration raises both numbers. In David, the high BUN (50) with a stable Creatinine (1.2) is a classic signature of tissue breakdown (catabolism).</div>
-            </div>
-            <div class="msg dr-msg">
-                <span class="msg-label">Dr. Patton</span>
-                If he had a 100% occlusion and the backups weren't working, he’d be in the ER right now. The fact that he’s sitting here proves the 'Circle of Willis' is doing its job.
-                <div class="reality-check"><strong>The Reality:</strong> The "Circle" is a contingency plan. The CTA shows the right vertebral has marked stenosis. He is one "clot" away from total blackout.</div>
-            </div>
-            <div class="msg dr-msg">
-                <span class="msg-label">Dr. Patton</span>
-                We have him on 'Triple Therapy.' We are already doing the maximum medical management available.
-                <div class="reality-check"><strong>The Reality:</strong> Medicine can't "un-clog" a 100% occlusion. It only tries to keep the remaining narrow pipes from snapping shut.</div>
-            </div>
-            <div class="msg dr-msg">
-                <span class="msg-label">Dr. Patton (Addressing David)</span>
-                David, think of your blood vessels like plumbing. Because your left vertebral is blocked and the right is very narrow, the blood in those 'backup' areas moves slower. When it sits still, it gets 'sticky.' We call this 'sludging.' Aspirin and Plavix together 'polish' your blood cells making them slippery so they can't grab onto each other.
-            </div>
-            <div class="msg devin-msg">
-                <span class="msg-label">Devin</span>
-                Exactly, Doctor. But if his diabetes is 'uncontrolled' at the cellular level, his blood isn't just slowit's <b>syrupy</b>. High sugar makes blood thicker. You’re polishing the cells, but the Diabetes is making the 'slow' blood even more dangerous. We must get the Endocrinology and Vascular consults.
-            </div>
-            <div class="msg dr-msg">
-                <span class="msg-label">Dr. Patton</span>
-                Devin, we are already on six different medications. If I send him to a specialist, they’re going to add three more. Sometimes 'less is more' when a patient is clinically stable.
-            </div>
-            <div class="msg devin-msg">
-                <span class="msg-label">Devin</span>
-                This isn't about adding pills; it's about validation. I’m asking for a specialist to confirm if his current 'pipes' can even handle his current blood pressure targets. If the right vertebral artery closes, no amount of Lisinopril will save that tissue.
-            </div>
-            <div class="msg dr-msg">
-                <span class="msg-label">Dr. Patton</span>
-                "In the medical community, an A1C of 5.1% is a 'cure'. Insurance won't even approve an Endocrinology consult for a patient with a 'normal' A1C.
-            </div>
-            <div class="msg devin-msg">
-                <span class="msg-label">Devin</span>
-                The A1C is an average, but the Glucose Meter is the reality. If insurance needs a reason, use the BUN:Crea ratio of 40 and the 100% occlusion as the primary diagnosis. That is 'Medical Necessity'.
-            </div>
-            <div class="msg dr-msg">
-                <span class="msg-label">Dr. Patton</span>
-                David looks good today. Let's check back in six months. If he has new numbness, we'll go to the specialist then.
-            </div>
-            <div class="msg devin-msg">
-                <span class="msg-label">Devin</span>
-                Waiting for symptoms is waiting for brain death. He already has 'Chronic Thalamic and Basal Ganglia infarcts'. We don't wait for the second engine to fail before we land the plane. We are landing now.
-            </div>
-            <div class="msg dr-msg" style="border-left: 8px solid var(--primary); background: #064e3b;">
-                <span class="msg-label">Dr. Patton (The Surrender)</span>
-                Fine. You’ve made a compelling case regarding the catabolic state and the hemodynamic risk of the remaining vertebral artery. I will mark the referrals as Urgent.
-            </div>
-            <div class="msg devin-msg" style="background: var(--primary); color: #0f172a; width: 100%; max-width: 100%; text-align: center;">
-                <strong>WIN STATE SECURED:</strong> Vascular Neurology, Endocrinology, and Updated MRA Imaging ordered.
-            </div>
-        </div>
-        <button class="reveal-btn" id="revealBtn" onclick="revealNext()">Click to Reveal Next Response</button>
+        <h2 style="color: var(--accent); text-align: center; font-size: 2rem; margin-bottom: 3rem;">Simulated Appointment: The Deep Dive</h2>
+        <div class="chat-window" id="chatWindow"></div>
+        <button class="reveal-btn" id="revealBtn">Click to Reveal Next Response</button>
     </section>
 
     <section id="test-results" class="file-library">
         <div id="password-gate" class="lock-overlay">
             <div class="lock-box">
-                <h2 style="border:none; color: var(--primary);">🔒 Restricted Access</h2>
-                <p class="hint-text">
+                <h2 style="color: var(--primary);">🔒 Restricted Access</h2>
+                <p>
                     <strong>Hint:</strong> A beautiful, flying insect known for its large, colorful, scaly wings that display intricate patterns, reminds you of a loved one named "Scott".
                 </p>
-                <input type="password" id="password-input" placeholder="Enter Password">
-                <br>
-                <button onclick="unlockLibrary()">Unlock Library</button>
-                <p id="error-msg" style="color: var(--high); font-size: 0.8rem; margin-top: 10px; display: none;">Incorrect Password.</p>
+                <input type="password" id="password-input" placeholder="Enter password">
+                <br><br>
+                <button class="unlock-btn" onclick="unlockLibrary()">Unlock Library</button>
+                <p id="error-msg" style="color: var(--high); margin-top: 20px; display: none;">Incorrect password. Try again.</p>
             </div>
         </div>
         
@@ -309,37 +364,132 @@
 <footer>&copy; 2025 David Olewski Medical Advocacy</footer>
 
 <script>
+// Wait for DOM to load before initializing chart
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('glucoseChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Normal\n(<130 mg/dL)', 'Elevated\n(130–179)', 'High\n(180–249)', 'Critical\n(≥250)'],
+            datasets: [{
+                label: 'Number of Readings',
+                data: [3, 18, 7, 1],
+                backgroundColor: ['#2dd4bf', '#fbbf24', '#ef4444', '#ff003c'],
+                borderRadius: 12,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Glucose Readings Distribution (29 total readings)',
+                    color: '#f1f5f9',
+                    font: { size: 18 }
+                },
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) label += ': ';
+                            label += context.parsed.y + ' readings';
+                            return label;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 20,
+                    ticks: { stepSize: 5, color: '#94a3b8' },
+                    grid: { color: 'rgba(255,255,255,0.05)' }
+                },
+                x: { ticks: { color: '#f1f5f9', font: { size: 14 } } }
+            }
+        }
+    });
+});
+
+// Simulator messages
+const messages = [
+    { speaker: "dr", label: "Dr. Patton: ", text: "Devin, I hear your concerns. But let's be realistic: David is 64. At this age, we expect to see some 'wear and tear' on the pipes. His A1C is 5.1% — that is a clinical victory. Why are we looking for a fire when the smoke has cleared?" },
+    { speaker: "devin", label: "Devin: ", text: "Because the smoke hasn't cleared, Doctor; the fuel has changed. His BUN is 50 and his ratio is 40. He isn't 'fixed'; he is 'starving.' You’re looking at the A1C like it’s a finished race, but I'm looking at his bedside glucose spikes to 211 as proof that his cells are still locked out. If his body is eating its own protein to stay alive, it’s also eating the very vessels he needs to survive that 100% occlusion in his neck." },
+    { speaker: "dr", label: "Dr. Patton: ", text: "The BUN/Crea ratio is often high in patients who are just dehydrated or on a high-protein diet. We see this all the time.", reality: "Dehydration raises both numbers. In David, the high BUN (50) with a stable Creatinine (1.2) is a classic signature of tissue breakdown (catabolism)." },
+    { speaker: "dr", label: "Dr. Patton: ", text: "If he had a 100% occlusion and the backups weren't working, he’d be in the ER right now. The fact that he’s sitting here proves the 'Circle of Willis' is doing its job.", reality: "The \"Circle\" is a contingency plan. The CTA shows the right vertebral has marked stenosis. He is one \"clot\" away from total blackout." },
+    { speaker: "dr", label: "Dr. Patton: ", text: "We have him on 'Triple Therapy.' We are already doing the maximum medical management available.", reality: "Medicine can't \"un-clog\" a 100% occlusion. It only tries to keep the remaining narrow pipes from snapping shut." },
+    { speaker: "dr", label: "Dr. Patton (Addressing David)", text: "David, think of your blood vessels like plumbing. Because your left vertebral is blocked and the right is very narrow, the blood in those 'backup' areas moves slower. When it sits still, it gets 'sticky.' We call this 'sludging.' Aspirin and Plavix together 'polish' your blood cells making them slippery so they can't grab onto each other." },
+    { speaker: "devin", label: "Devin: ", text: "Exactly, Doctor. But if his diabetes is 'uncontrolled' at the cellular level, his blood isn't just slow—it's <b>syrupy</b>. High sugar makes blood thicker. You’re polishing the cells, but the Diabetes is making the 'slow' blood even more dangerous. We must get the Endocrinology and Vascular consults." },
+    { speaker: "dr", label: "Dr. Patton: ", text: "Devin, we are already on six different medications. If I send him to a specialist, they’re going to add three more. Sometimes 'less is more' when a patient is clinically stable." },
+    { speaker: "devin", label: "Devin: ", text: "This isn't about adding pills; it's about validation. I’m asking for a specialist to confirm if his current 'pipes' can even handle his current blood pressure targets. If the right vertebral artery closes, no amount of Lisinopril will save that tissue." },
+    { speaker: "dr", label: "Dr. Patton: ", text: "\"In the medical community, an A1C of 5.1% is a 'cure'. Insurance won't even approve an Endocrinology consult for a patient with a 'normal' A1C." },
+    { speaker: "devin", label: "Devin: ", text: "The A1C is an average, but the Glucose Meter is the reality. If insurance needs a reason, use the BUN:Crea ratio of 40 and the 100% occlusion as the primary diagnosis. That is 'Medical Necessity'." },
+    { speaker: "dr", label: "Dr. Patton: ", text: "David looks good today. Let's check back in six months. If he has new numbness, we'll go to the specialist then." },
+    { speaker: "devin", label: "Devin: ", text: "Waiting for symptoms is waiting for brain death. He already has 'Chronic Thalamic and Basal Ganglia infarcts'. We don't wait for the second engine to fail before we land the plane. We are landing now." },
+    { speaker: "dr", label: "Dr. Patton (The Surrender): ", text: "Fine. You’ve made a compelling case regarding the catabolic state and the hemodynamic risk of the remaining vertebral artery. I will mark the referrals as Urgent.", special: true },
+    { win: true }
+];
+
 let currentStep = 0;
-const messages = document.querySelectorAll('.msg');
-const btn = document.getElementById('revealBtn');
+const chatWindow = document.getElementById('chatWindow');
+const revealBtn = document.getElementById('revealBtn');
 
 function revealNext() {
-    if (currentStep < messages.length) {
-        messages[currentStep].style.display = 'block';
-        messages[currentStep].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        currentStep++;
-        if (currentStep === messages.length) {
-            btn.innerHTML = "Appointment Concluded";
-            btn.disabled = true;
-        }
-    }
-}
+    if (currentStep >= messages.length) return;
 
-function unlockLibrary() {
-    const pass = document.getElementById('password-input').value;
-    if (pass.toLowerCase() === "butterfly") {
-        document.getElementById('password-gate').classList.add('hidden');
+    const msgData = messages[currentStep];
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `msg ${msgData.speaker ? msgData.speaker + '-msg' : ''}`;
+
+    let content = '';
+    if (msgData.win) {
+        content = `<div class="msg devin-msg win-state"><strong>WIN STATE SECURED:</strong> Vascular Neurology, Endocrinology, and Updated MRA Imaging ordered.</div>`;
     } else {
-        document.getElementById('error-msg').style.display = 'block';
-        document.getElementById('password-input').value = ""; 
+        content += `<span class="msg-label">${msgData.label}</span>${msgData.text}`;
+        if (msgData.reality) content += `<div class="reality-check"><strong>The Reality:</strong> ${msgData.reality}</div>`;
+        if (msgData.special) msgDiv.style.borderLeft = '8px solid var(--primary)';
+    }
+    msgDiv.innerHTML = content;
+    chatWindow.appendChild(msgDiv);
+    msgDiv.style.animation = 'messageReveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards';
+    msgDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    currentStep++;
+    if (currentStep === messages.length) {
+        revealBtn.innerHTML = "Appointment Concluded";
+        revealBtn.disabled = true;
+        revealBtn.style.opacity = '0.6';
+    }
+}
+revealBtn.addEventListener('click', revealNext);
+
+// Fixed and beautiful password unlock
+function unlockLibrary() {
+    const input = document.getElementById('password-input');
+    const pass = input.value.trim().toLowerCase();
+    const gate = document.getElementById('password-gate');
+    const errorMsg = document.getElementById('error-msg');
+
+    if (pass === 'butterfly') {
+        gate.style.animation = 'fadeOut 1.2s ease-out forwards';
+        setTimeout(() => {
+            gate.classList.add('hidden');
+        }, 1200);
+    } else {
+        errorMsg.style.display = 'block';
+        input.value = '';
+        input.focus();
     }
 }
 
-document.getElementById('password-input').addEventListener("keypress", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    unlockLibrary();
-  }
+// Allow Enter key to trigger unlock
+document.getElementById('password-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        unlockLibrary();
+    }
 });
 </script>
 
