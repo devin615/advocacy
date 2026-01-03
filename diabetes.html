@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metabolic - David Olewski</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<nav>
+    <a href="index.html" class="nav-btn"><span>🏠</span>Dashboard</a>
+    <a href="diabetes.html" class="nav-btn active"><span>🧪</span>Metabolic</a>
+    <a href="clinical-data.html" class="nav-btn"><span>🧠</span>Vascular</a>
+    <a href="cardiac.html" class="nav-btn"><span>❤️</span>Cardiac</a>
+    <a href="simulator.html" class="nav-btn sim-btn"><span>🎭</span>Simulator</a>
+</nav>
+
+<div class="container">
+    <div class="pillar-card" style="border-top: 4px solid var(--warning)">
+        <h2 style="font-size: 1.3rem;">1. The "Meal Trap"</h2>
+        <p style="font-size: 0.9rem;">David is in a <b>Catabolic State</b>. His body is stuck in a cycle of eating itself to stay alive.</p>
+        
+        <ul style="padding-left: 20px; font-size: 0.85rem; color: var(--text-muted);">
+            <li>The hormone insulin isn't working properly.</li>
+            <li>Sugar (glucose) stays trapped in the blood and can't get inside cells.</li>
+            <li>Cells literally starve, even with high blood sugar.</li>
+        </ul>
+
+        <div class="chart-wrapper"><canvas id="glucoseChart"></canvas></div>
+
+        <h3 style="font-size: 1rem; color: var(--primary); margin-top: 25px;">Glucose Impact Scale</h3>
+        <div class="data-grid" style="grid-template-columns: 1fr; gap: 8px;">
+            <div class="data-item" style="border-left: 5px solid #2dd4bf; background: rgba(45, 212, 191, 0.05);">
+                <span style="color: #2dd4bf; font-weight: 800; font-size: 0.7rem;">TEAL: NORMAL (70-100)</span>
+                <p style="font-size: 0.8rem; margin: 4px 0;">Cells are fed. No damage to arteries.</p>
+            </div>
+            <div class="data-item" style="border-left: 5px solid #fbbf24; background: rgba(251, 191, 36, 0.05);">
+                <span style="color: #fbbf24; font-weight: 800; font-size: 0.7rem;">YELLOW: ELEVATED (100-140)</span>
+                <p style="font-size: 0.8rem; margin: 4px 0;">The "Sticky Blood" phase. Inflammation begins.</p>
+            </div>
+            <div class="data-item" style="border-left: 5px solid #f97316; background: rgba(249, 115, 22, 0.05);">
+                <span style="color: #f97316; font-weight: 800; font-size: 0.7rem;">ORANGE: HIGH (140-200)</span>
+                <p style="font-size: 0.8rem; margin: 4px 0;">Sugar is physically scraping artery walls.</p>
+            </div>
+            <div class="data-item" style="border-left: 5px solid #ff003c; background: rgba(255, 0, 60, 0.05);">
+                <span style="color: #ff003c; font-weight: 800; font-size: 0.7rem;">RED: CRITICAL (200+)</span>
+                <p style="font-size: 0.8rem; margin: 4px 0;">High stroke risk. Cells are starving.</p>
+            </div>
+        </div>
+
+        <h3 style="font-size: 1rem; color: var(--accent); margin-top: 25px;">Metabolic Markers</h3>
+        <div class="data-grid">
+            <div class="data-item">
+                <span class="data-label">Glucose Peak</span><span class="data-value">249</span>
+                <details class="details-toggle">
+                    <summary>Plain English</summary>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">This is 2.5x higher than normal. It proves sugar is staying in your blood and damaging brain arteries.</div>
+                </details>
+            </div>
+            <div class="data-item">
+                <span class="data-label">A1C Trend</span><span class="data-value">5.1%</span>
+                <details class="details-toggle">
+                    <summary>Plain English</summary>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">A 5.1% looks "normal" but is actually a warning. It shows your body is losing weight and fuel too quickly.</div>
+                </details>
+            </div>
+            <div class="data-item">
+                <span class="data-label">Weight Loss</span><span class="data-value">140 lbs</span>
+                <details class="details-toggle">
+                    <summary>Plain English</summary>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">Your body is melting away because cells are starving, even though you are eating regularly.</div>
+                </details>
+            </div>
+            <div class="data-item">
+                <span class="data-label">Lab Ratio</span><span class="data-value">50:1</span>
+                <details class="details-toggle">
+                    <summary>What is this?</summary>
+                    <div style="font-size: 0.8rem; margin-top: 5px;">Proof that your body is "cannibalizing" itself for energy. Your kidneys are fine, but your blood is full of breakdown "ash".</div>
+                </details>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const ctx = document.getElementById('glucoseChart').getContext('2d');
+    new Chart(ctx, { 
+        type: 'bar', 
+        data: { 
+            labels: ['Normal', 'Elevated', 'High', 'Critical'], 
+            datasets: [{ 
+                data: [3, 18, 7, 1], 
+                backgroundColor: ['#2dd4bf', '#fbbf24', '#f97316', '#ff003c'] 
+            }] 
+        }, 
+        options: { 
+            maintainAspectRatio: false, 
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } } }
+        } 
+    });
+</script>
+</body>
+</html>

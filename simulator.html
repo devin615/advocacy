@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Dr. Patton Simulator - David Olewski Advocacy</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-btn"><span>🏠</span>Dashboard</a>
+    <a href="diabetes.html" class="nav-btn"><span>🧪</span>Metabolic</a>
+    <a href="clinical-data.html" class="nav-btn"><span>🧠</span>Vascular</a>
+    <a href="cardiac.html" class="nav-btn"><span>❤️</span>Cardiac</a>
+    <a href="simulator.html" class="nav-btn active sim-btn"><span>🎭</span>Simulator</a>
+    <a href="library.html" class="nav-btn"><span>📚</span>Evidence</a>
+</nav>
+
+<div class="container">
+    <div class="pillar-card">
+        <h2 style="text-align: center; font-size: 1.6rem; color: var(--accent); margin-bottom: 10px;">Simulated Appointment</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 25px;">
+            Practice the critical advocacy dialogue needed to bypass clinical resistance.
+        </p>
+
+        <div class="chat-window" id="chatWindow"></div>
+        
+        <button class="reveal-btn" id="revealBtn">Click to Reveal Next Response</button>
+    </div>
+</div>
+
+<script>
+// FULL DIALOGUE RESTORED FROM ORIGINAL REFERENCE
+const messages = [
+    { 
+        speaker: "dr", 
+        label: "Dr. Patton: ", 
+        text: "Devin, I hear your concerns. But let's be realistic: David is 64. At this age, we expect to see some 'wear and tear' on the pipes. His A1C is 5.1% — that is a clinical victory. Why are we looking for a fire when the smoke has cleared?" 
+    },
+    { 
+        speaker: "devin", 
+        label: "Devin: ", 
+        text: "Because the smoke hasn't cleared, Doctor; the fuel has changed. His BUN is 50 and his ratio is 40. He isn't 'fixed'; he is 'starving.' You’re looking at the A1C like it’s a finished race, but I'm looking at his bedside glucose spikes to 211 as proof that his cells are still locked out. If his body is eating its own protein to stay alive, it’s also eating the very vessels he needs to survive that 100% occlusion in his neck." 
+    },
+    { 
+        speaker: "dr", 
+        label: "Dr. Patton: ", 
+        text: "The BUN/Crea ratio is often high in patients who are just dehydrated or on a high-protein diet. We see this all the time.", 
+        reality: "Dehydration raises both numbers. In David, the high BUN (50) with a stable Creatinine (1.2) is a classic signature of tissue breakdown (catabolism)." 
+    },
+    { 
+        speaker: "dr", 
+        label: "Dr. Patton: ", 
+        text: "If he had a 100% occlusion and the backups weren't working, he’d be in the ER right now. The fact that he’s sitting here proves the 'Circle of Willis' is doing its job.", 
+        reality: "The \"Circle\" is a contingency plan. The CTA shows the right vertebral has marked stenosis. He is one \"clot\" away from total blackout." 
+    },
+    { 
+        speaker: "dr", 
+        label: "Dr. Patton: ", 
+        text: "We have him on 'Triple Therapy.' We are already doing the maximum medical management available.", 
+        reality: "Medicine can't \"un-clog\" a 100% occlusion. It only tries to keep the remaining narrow pipes from snapping shut." 
+    },
+    { 
+        speaker: "dr", 
+        label: "Dr. Patton (Addressing David): ", 
+        text: "David, think of your blood vessels like plumbing. Because your left vertebral is blocked and the right is very narrow, the blood in those 'backup' areas moves slower. When it sits still, it gets 'sticky.' We call this 'sludging.' Aspirin and Plavix together 'polish' your blood cells making them slippery so they can't grab onto each other." 
+    },
+    { 
+        speaker: "devin", 
+        label: "Devin: ", 
+        text: "Exactly, Doctor. But if his diabetes is 'uncontrolled' at the cellular level, his blood isn't just slow—it's <b>syrupy</b>. High sugar makes blood thicker. You’re polishing the cells, but the Diabetes is making the 'slow' blood even more dangerous. We must get the Endocrinology and Vascular consults." 
+    },
+    { 
+        speaker: "dr", 
+        label: "Dr. Patton: ", 
+        text: "Devin, we are already on six different medications. If I send him to a specialist, they’re going to add three more. Sometimes 'less is more' when a patient is clinically stable." 
+    },
+    { 
+        speaker: "devin", 
+        label: "Devin: ", 
+        text: "This isn't about adding pills; it's about validation. I’m asking for a specialist to confirm if his current 'pipes' can even handle his current blood pressure targets. If the right vertebral artery closes, no amount of Lisinopril will save that tissue." 
+    },
+    { 
+        speaker: "dr", 
+        label: "Dr. Patton: ", 
+        text: "In the medical community, an A1C of 5.1% is a 'cure'. Insurance won't even approve an Endocrinology consult for a patient with a 'normal' A1C." 
+    },
+    { 
+        speaker: "devin", 
+        label: "Devin: ", 
+        text: "The A1C is an average, but the Glucose Meter is the reality. If insurance needs a reason, use the BUN:Crea ratio of 40 and the 100% occlusion as the primary diagnosis. That is 'Medical Necessity'." 
+    },
+    { 
+        speaker: "dr", 
+        label: "Dr. Patton: ", 
+        text: "David looks good today. Let's check back in six months. If he has new numbness, we'll go to the specialist then." 
+    },
+    { 
+        speaker: "devin", 
+        label: "Devin: ", 
+        text: "Waiting for symptoms is waiting for brain death. He already has 'Chronic Thalamic and Basal Ganglia infarcts'. We don't wait for the second engine to fail before we land the plane. We are landing now." 
+    },
+    { 
+        speaker: "dr", 
+        label: "Dr. Patton (The Surrender): ", 
+        text: "Fine. You’ve made a compelling case regarding the catabolic state and the hemodynamic risk of the remaining vertebral artery. I will mark the referrals as Urgent.", 
+        special: true 
+    },
+    { win: true }
+];
+
+let currentStep = 0;
+const chatWindow = document.getElementById('chatWindow');
+const revealBtn = document.getElementById('revealBtn');
+
+function revealNext() {
+    if (currentStep >= messages.length) return;
+
+    const msgData = messages[currentStep];
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `msg ${msgData.speaker ? msgData.speaker + '-msg' : ''}`;
+
+    let content = '';
+    if (msgData.win) {
+        content = `<div class="win-state" style="background: linear-gradient(90deg, var(--primary), #22d3ee); color: #0f172a; padding: 25px; border-radius: 20px; font-weight: 900; text-align: center;"><strong>WIN STATE SECURED:</strong> Vascular Neurology, Endocrinology, and Updated MRA Imaging ordered.</div>`;
+        revealBtn.innerHTML = "Appointment Concluded";
+        revealBtn.disabled = true;
+        revealBtn.style.opacity = '0.5';
+    } else {
+        content += `<span class="msg-label" style="font-size: 0.7rem; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; display: block; opacity: 0.7;">${msgData.label}</span>${msgData.text}`;
+        
+        if (msgData.reality) {
+            content += `<div class="reality-check" style="background: rgba(239, 68, 68, 0.1); border-left: 4px solid var(--high); padding: 12px; margin-top: 12px; border-radius: 8px; color: #ff9999; font-size: 0.85rem;"><strong>The Reality:</strong> ${msgData.reality}</div>`;
+        }
+        
+        if (msgData.special) {
+            msgDiv.style.borderLeft = '6px solid var(--primary)';
+        }
+    }
+
+    msgDiv.innerHTML = content;
+    chatWindow.appendChild(msgDiv);
+    
+    // Smooth reveal animation
+    msgDiv.style.opacity = "0";
+    msgDiv.style.transform = "translateY(20px)";
+    msgDiv.style.transition = "all 0.5s ease-out";
+    
+    setTimeout(() => {
+        msgDiv.style.opacity = "1";
+        msgDiv.style.transform = "translateY(0)";
+        msgDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 10);
+
+    currentStep++;
+}
+
+revealBtn.addEventListener('click', revealNext);
+</script>
+
+</body>
+</html>

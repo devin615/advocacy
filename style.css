@@ -1,0 +1,155 @@
+:root {
+    /* 2026 Medical Advocacy Palette */
+    --bg: #030712; 
+    --card-bg: rgba(30, 41, 59, 0.5); 
+    --primary: #2dd4bf;
+    --elevated: #fbbf24; 
+    --high: #f87171; 
+    --critical: #ff2d55;
+    --accent: #818cf8; 
+    --text-main: #f8fafc; 
+    --text-muted: #94a3b8;
+    --warning: #f43f5e; 
+    --dr-bg: #334155; 
+    --devin-bg: #0d9488;
+    --glass: rgba(15, 23, 42, 0.85);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body { 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+    background: radial-gradient(circle at top right, #1e293b, #030712);
+    color: var(--text-main); 
+    line-height: 1.5; 
+    margin: 0; 
+    padding-bottom: 100px; /* Space for the bottom navigation */
+    min-height: 100vh;
+}
+
+/* Futuristic Bottom Navigation optimized for 5 items */
+nav { 
+    background: var(--glass); 
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 10px 5px; 
+    position: fixed; 
+    bottom: 15px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000; 
+    border: 1px solid var(--border); 
+    display: flex; 
+    justify-content: space-around; 
+    width: 95%;
+    max-width: 500px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+}
+
+.nav-btn { 
+    color: var(--text-muted); 
+    text-decoration: none; 
+    font-weight: 600; 
+    font-size: 0.55rem; /* Smaller text to fit all 5 icons comfortably */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s ease;
+    flex: 1;
+    text-align: center;
+}
+
+.nav-btn span { font-size: 1.2rem; } /* Icon size */
+.nav-btn.active { color: var(--primary); }
+.nav-btn.sim-btn { color: var(--accent); }
+
+/* Containers & Bento Layout */
+.container { padding: 15px; max-width: 600px; margin: 0 auto; }
+
+.urgent-banner { 
+    background: linear-gradient(135deg, rgba(255, 45, 85, 0.15) 0%, rgba(255, 45, 85, 0.05) 100%);
+    border: 1px solid var(--critical);
+    padding: 18px; 
+    border-radius: 20px; 
+    margin-bottom: 20px;
+}
+
+.pillar-card { 
+    background: var(--card-bg); 
+    backdrop-filter: blur(10px);
+    border-radius: 24px; 
+    margin-bottom: 20px; 
+    border: 1px solid var(--border);
+    padding: 20px; 
+}
+
+/* Bento Grid System */
+.data-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 10px; 
+    margin-top: 1.5rem; 
+}
+
+.data-item { 
+    background: rgba(15, 23, 42, 0.4); 
+    padding: 14px; 
+    border-radius: 18px; 
+    border: 1px solid var(--border); 
+}
+
+.data-item.full-width { grid-column: span 2; }
+.data-label { color: var(--primary); font-weight: 700; font-size: 0.6rem; text-transform: uppercase; }
+.data-value { font-weight: 800; font-size: 1.1rem; display: block; margin-top: 4px; }
+
+/* Interactive Elements */
+.details-toggle { 
+    cursor: pointer; 
+    color: var(--accent); 
+    font-size: 0.75rem; 
+    margin-top: 8px; 
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+}
+
+.chart-wrapper { height: 250px; margin: 1.5rem 0; background: rgba(0,0,0,0.2); border-radius: 20px; padding: 10px; }
+
+/* Chat Simulator Mobile Styles */
+.chat-window { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+.msg { max-width: 85%; padding: 12px 16px; border-radius: 18px; font-size: 0.9rem; }
+.dr-msg { background: var(--dr-bg); border-bottom-left-radius: 4px; }
+.devin-msg { background: var(--devin-bg); align-self: flex-end; border-bottom-right-radius: 4px; }
+.reality-check { background: rgba(248, 113, 113, 0.1); border-left: 3px solid var(--high); padding: 8px; margin-top: 8px; font-size: 0.8rem; color: #ffcccc; }
+
+.reveal-btn {
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 14px;
+    font-weight: 800;
+}
+
+/* File Library Mobile Grid */
+.file-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.file-card { 
+    background: var(--card-bg); 
+    border: 1px solid var(--border); 
+    border-radius: 14px; 
+    padding: 12px; 
+    display: flex; 
+    align-items: center; 
+    gap: 12px; 
+    text-decoration: none; 
+    color: white; 
+}
+
+/* Password Gate Mobile */
+.lock-overlay { position: fixed; inset: 0; background: var(--bg); z-index: 5000; padding: 20px; display: flex; align-items: center; justify-content: center; text-align: center; }
+#pass { width: 100%; padding: 14px; border-radius: 10px; background: #1e293b; border: 1px solid var(--primary); color: white; margin-bottom: 10px; font-size: 1rem; }
+.unlock-btn { width: 100%; padding: 14px; border-radius: 10px; background: var(--primary); border: none; font-weight: 900; }

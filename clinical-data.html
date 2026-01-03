@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Vascular - David Olewski</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-btn"><span>🏠</span>Dashboard</a>
+    <a href="diabetes.html" class="nav-btn"><span>🧪</span>Metabolic</a>
+    <a href="clinical-data.html" class="nav-btn active"><span>🧠</span>Vascular</a>
+    <a href="cardiac.html" class="nav-btn"><span>❤️</span>Cardiac</a>
+    <a href="simulator.html" class="nav-btn sim-btn"><span>🎭</span>Simulator</a>
+</nav>
+
+<div class="container">
+    <div class="pillar-card" style="border-top-color: var(--critical)">
+        <h2 style="margin-top:0; font-size: 1.2rem; color: var(--critical);">2. The Vascular Blockage</h2>
+        <p style="font-size: 0.9rem; margin-bottom: 20px;">
+            Imaging confirms a <b>100% Left Vertebral Occlusion</b>. David is surviving solely on "backup" vessels.
+        </p>
+
+        <div class="data-grid">
+            <div class="data-item full-width" style="border-left: 4px solid var(--critical);">
+                <span class="data-label">The Main Blockage</span>
+                <span class="data-value" style="color: var(--critical);">100% Blocked</span>
+                <p style="font-size: 0.7rem; margin:0;">Left Vertebral Artery</p>
+                <details class="details-toggle">
+                    <summary>Plain English</summary>
+                    <div style="font-size: 0.8rem; margin-top: 5px; color: var(--text-main);">
+                        One of the two main arteries that supplies blood to the back of your brain is completely shut. This is the most dangerous type of blockage because it forces your brain to rely on a "backup generator" (the Circle of Willis).
+                    </div>
+                </details>
+            </div>
+
+            <div class="data-item" style="border-left: 4px solid var(--high);">
+                <span class="data-label">Thalamus Damage</span>
+                <span class="data-value">0.9 cm Infarct</span>
+                <p style="font-size: 0.7rem; margin:0;"></p>
+                <details class="details-toggle">
+                    <summary>What is the Thalamus?</summary>
+                    <div style="font-size: 0.8rem; margin-top: 5px; color: var(--text-main);">
+                        The Thalamus is like your brain's <b>Main Switchboard</b>. Damage here (the infarct) means sensory and motor signals are getting "dropped" or scrambled, leading to the numbness and coordination issues David is feeling.
+                    </div>
+                </details>
+            </div>
+
+            <div class="data-item" style="border-left: 4px solid var(--high);">
+                <span class="data-label">Internal Capsule</span>
+                <span class="data-value">0.6 cm Infarct</span>
+                <p style="font-size: 0.7rem; margin:0;"></p>
+                <details class="details-toggle">
+                    <summary>What this means</summary>
+                    <div style="font-size: 0.8rem; margin-top: 5px; color: var(--text-main);">
+                        This is the <b>Main Highway</b> for messages between your brain and your limbs. Damage here directly affects physical movement and strength, especially on one side of the body.
+                    </div>
+                </details>
+            </div>
+
+            <div class="data-item full-width" style="border-left: 4px solid var(--critical); background: rgba(255, 0, 60, 0.05);">
+                <span class="data-label">Hemodynamic Status</span>
+                <span class="data-value" style="color: var(--critical);">Ultra-Critical</span>
+                <p style="font-size: 0.8rem; margin-top: 5px;">
+                    The brain has no margin for error. Any dip in pressure or spike in heart rate (like 165 BPM) will cause the backup system to fail.
+                </p>
+            </div>
+        </div>
+
+        <div style="margin-top: 30px; text-align: center;">
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">Visualizing the Circle of Willis (Your Backup System)</p>
+            <img src="COS.png" style="width: 100%; max-width: 500px; height: auto; border-radius: 15px; border: 1px solid var(--primary);">
+            <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 8px;"></p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardiac - David Olewski</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav>
+    <a href="index.html" class="nav-btn"><span>🏠</span>Dashboard</a>
+    <a href="diabetes.html" class="nav-btn"><span>🧪</span>Metabolic</a>
+    <a href="clinical-data.html" class="nav-btn"><span>🧠</span>Vascular</a>
+    <a href="cardiac.html" class="nav-btn active"><span>❤️</span>Cardiac</a>
+    <a href="simulator.html" class="nav-btn sim-btn"><span>🎭</span>Simulator</a>
+</nav>
+
+<div class="container">
+    <div class="pillar-card" style="border-top: 4px solid var(--elevated)">
+        <h2 style="font-size: 1.3rem;">4. Cardiac Monitoring (Oct 2024)</h2>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+            Clinical findings from the 30-day wireless event monitor[cite: 28, 39]. 
+            Diagnosis: <b>Cerebellar stroke syndrome</b>.
+        </p>
+
+        <div class="data-grid">
+            <div class="data-item full-width" style="border: 2px solid var(--critical);">
+                <span class="data-label">Fastest Heart Rate</span>
+                <span class="data-value" style="color: var(--critical);">165 BPM</span>
+                <details class="details-toggle">
+                    <summary>Event Details</summary>
+                    <div>
+                        PSVT (Paroxysmal Supraventricular Tachycardia) occurred on 09/17/2024[cite: 55, 110]. 
+                        The run lasted 17 beats at a rate of 165 BPM[cite: 36, 42].
+                    </div>
+                </details>
+            </div>
+
+            <div class="data-item">
+                <span class="data-label">PAC Count</span>
+                <span class="data-value">13,132</span>
+                <p style="font-size: 0.7rem; margin:0;">1% Overall Burden [cite: 37, 43]</p>
+            </div>
+
+            <div class="data-item">
+                <span class="data-label">PVC Count</span>
+                <span class="data-value">1,218</span>
+                <p style="font-size: 0.7rem; margin:0;">1% Overall Burden [cite: 38, 44]</p>
+            </div>
+
+            <div class="data-item full-width">
+                <span class="data-label">Bradycardia Events</span>
+                <span class="data-value">57 - 59 BPM</span>
+                <details class="details-toggle">
+                    <summary>Recorded Instaces</summary>
+                    <div>
+                        Sinus Bradycardia was recorded multiple times, including after taking medication (59 BPM) 
+                        and during sleep/rest (57 BPM)[cite: 49, 55, 140].
+                    </div>
+                </details>
+            </div>
+        </div>
+
+        <div class="urgent-banner" style="margin-top: 25px; background: rgba(251, 191, 36, 0.1); border-color: var(--elevated);">
+            <h3 style="color: var(--elevated); margin: 0; font-size: 1rem;">CLINICAL SIGNIFICANCE</h3>
+            <p style="font-size: 0.85rem; margin-top: 8px;">
+                While the PAC/PVC burden is 1%, the presence of <b>SVT (165 BPM)</b> in a patient with 100% vertebral occlusion 
+                presents a severe hemodynamic challenge. Rapid heart rates can further compromise 
+                cerebral blood flow already restricted by vascular blockages.
+            </p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
