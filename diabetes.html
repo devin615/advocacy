@@ -9,11 +9,15 @@
 </head>
 <body>
 <nav>
-    <a href="index.html" class="nav-btn"><span>🏠</span>Dashboard</a>
-    <a href="diabetes.html" class="nav-btn active"><span>🧪</span>Metabolic</a>
+    <nav>
+    <a href="index.html" class="nav-btn active"><span>🏠</span>Dashboard</a>
+    <a href="diabetes.html" class="nav-btn"><span>🧪</span>Metabolic</a>
     <a href="clinical-data.html" class="nav-btn"><span>🧠</span>Vascular</a>
     <a href="cardiac.html" class="nav-btn"><span>❤️</span>Cardiac</a>
+    <a href="disability.html" class="nav-btn"><span>♿</span>Disability</a>
     <a href="simulator.html" class="nav-btn sim-btn"><span>🎭</span>Simulator</a>
+    <a href="library.html" class="nav-btn sim-btn"><span>X</span>Library</a>
+</nav>
 </nav>
 
 <div class="container">
@@ -49,6 +53,21 @@
             </div>
         </div>
 
+        <div class="pillar-card" style="border-top-color: var(--primary); margin-top: 40px;">
+        <h2 style="margin-top:0; font-size: 1.2rem; color: var(--primary);">Metabolic Trend: The "Burnout" Line</h2>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 15px;">
+            Tracking the BUN/Creatinine Ratio (Normal Range: 7 - 25).
+        </p>
+        <div class="chart-wrapper">
+            <canvas id="burnoutChart"></canvas>
+        </div>
+        <div style="background: rgba(45, 212, 191, 0.1); padding: 12px; border-radius: 12px; margin-top: 15px; border-left: 4px solid var(--primary);">
+            <p style="font-size: 0.8rem; margin:0; color: var(--text-main);">
+                <b>How to read this chart:</b> The <b>Green Area</b> is the Safe Zone (Ratio 7-25). In Jan 2025, your body spiked into the <b>Danger Zone (37.6)</b>. The drop in Nov 2025 is the "Burnout" from losing 140 lbs.
+            </p>
+        </div>
+    </div>
+
         <h3 style="font-size: 1rem; color: var(--accent); margin-top: 25px;">Metabolic Markers</h3>
         <div class="data-grid">
             <div class="data-item">
@@ -73,7 +92,7 @@
                 </details>
             </div>
             <div class="data-item">
-                <span class="data-label">Lab Ratio</span><span class="data-value">50:1</span>
+                <span class="data-label">Lab Ratio</span><span class="data-value">BUN: 50 Creatine: 1</span>
                 <details class="details-toggle">
                     <summary>What is this?</summary>
                     <div style="font-size: 0.8rem; margin-top: 5px;">Proof that your body is "cannibalizing" itself for energy. Your kidneys are fine, but your blood is full of breakdown "ash".</div>
@@ -100,6 +119,58 @@
             scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } } }
         } 
     });
+    
+    // BUN/Creatinine Ratio Trend - Real data from Dad's portal
+    const labels = ['Aug 17 2024', 'Dec 5 2024', 'Mar 27 2025', 'Jul 16 2025', 'Nov 4 2025'];
+    const ratioData = [21, 38, 22, 21, 25];  // Approximate from the graph spikes/drops
+
+    const pointColors = ['#2dd4bf', '#ff2d55', '#2dd4bf', '#2dd4bf', '#fbbf24'];
+
+    const burnoutCtx = document.getElementById('burnoutChart').getContext('2d');
+    new Chart(burnoutCtx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'BUN/Creatinine Ratio',
+                data: ratioData,
+                borderColor: '#fbbf24',
+                backgroundColor: 'rgba(251, 191, 36, 0.2)',
+                tension: 0.3,
+                pointBackgroundColor: pointColors,
+                pointBorderColor: '#fff',
+                pointBorderWidth: 3,
+                pointRadius: 8,
+                pointHoverRadius: 12,
+                fill: false
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                    cornerRadius: 12,
+                    titleFont: { size: 14 },
+                    bodyFont: { size: 13 }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    suggestedMax: 50,
+                    grid: { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: '#94a3b8' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#94a3b8', maxRotation: 45 }
+                }
+            }
+        }
+    });
+
 </script>
 </body>
 </html>

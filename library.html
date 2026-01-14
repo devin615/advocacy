@@ -8,28 +8,39 @@
 </head>
 <body>
 <nav>
-    <a href="index.html" class="nav-btn"><span>🏠</span>Dashboard</a>
+    <a href="index.html" class="nav-btn active"><span>🏠</span>Dashboard</a>
     <a href="diabetes.html" class="nav-btn"><span>🧪</span>Metabolic</a>
     <a href="clinical-data.html" class="nav-btn"><span>🧠</span>Vascular</a>
+    <a href="cardiac.html" class="nav-btn"><span>❤️</span>Cardiac</a>
+    <a href="disability.html" class="nav-btn"><span>♿</span>Disability</a>
     <a href="simulator.html" class="nav-btn sim-btn"><span>🎭</span>Simulator</a>
-    <a href="library.html" class="nav-btn active"><span>📚</span>Evidence</a>
+    <a href="library.html" class="nav-btn sim-btn"><span>X</span>Library</a>
 </nav>
 <div id="gate" class="lock-overlay">
     <div class="lock-box">
         <h2 style="color: var(--primary);">Restricted</h2>
-        <p style="font-size: 0.9rem; color: var(--text-muted);">Hint: Beautiful flying insect... <strong>"Scott"</strong>.</p>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">Hint: Beautiful flying insect... <strong>" Reminds you of Scott"</strong>.</p>
         <input type="password" id="pass" placeholder="Password">
         <button onclick="unlock()" class="unlock-btn">Unlock</button>
         <p id="error-msg" style="color: var(--high); display: none; margin-top: 10px;">Incorrect.</p>
     </div>
+    <nav>
+    <a href="index.html" class="nav-btn active"><span>🏠</span>Dashboard</a>
+    <a href="diabetes.html" class="nav-btn"><span>🧪</span>Metabolic</a>
+    <a href="clinical-data.html" class="nav-btn"><span>🧠</span>Vascular</a>
+    <a href="cardiac.html" class="nav-btn"><span>❤️</span>Cardiac</a>
+    <a href="disability.html" class="nav-btn"><span>♿</span>Disability</a>
+    <a href="simulator.html" class="nav-btn sim-btn"><span>🎭</span>Simulator</a>
+    <a href="library.html" class="nav-btn sim-btn"><span>X</span>Library</a>
+</nav>
 </div>
 <div class="container">
     <h2 style="color: var(--primary); font-size: 1.4rem;">Clinical Evidence</h2>
     <div class="file-grid">
-        <a href="#" class="file-card"><span class="file-icon">📄</span><div><strong>A1C Trend.pdf</strong><br><small>Endocrine</small></div></a>
-        <a href="#" class="file-card"><span class="file-icon">📄</span><div><strong>Metabolic Panel.pdf</strong><br><small>Metabolic</small></div></a>
-        <a href="#" class="file-card"><span class="file-icon">📄</span><div><strong>CT Angio Head.pdf</strong><br><small>Cerebral</small></div></a>
-        <a href="#" class="file-card"><span class="file-icon">📄</span><div><strong>MRI Brain Report.pdf</strong><br><small>Infarct</small></div></a>
+        <a href="Docs/A1C Trend.pdf" class="file-card"><span class="file-icon">📄</span><div><strong>A1C Trend.pdf</strong><br><small>Endocrine</small></div></a>
+        <a href="Docs/COMPREHENSIVE METABOLIC PANEL.pdf" class="file-card"><span class="file-icon">📄</span><div><strong>Comprehensive Metabolic Panel.pdf</strong><br><small>Metabolic</small></div></a>
+        <a href="Docs/CT Angio Head.pdf" class="file-card"><span class="file-icon">📄</span><div><strong>CT Angio Head.pdf</strong><br><small>Cerebral</small></div></a>
+        <a href="Docs/MR ANGIOGRAM HEAD WO IV CONTRAST.pdf" class="file-card"><span class="file-icon">📄</span><div><strong>MRI Brain Report.pdf</strong><br><small>Infarct</small></div></a>
     </div>
 </div>
 <script>
